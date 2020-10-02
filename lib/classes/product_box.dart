@@ -20,9 +20,12 @@ class ProductBox extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Image.asset('assets/' + image),
-            Expanded(child:
-              Container(
+            Expanded(
+              flex: 2,
+              child: Image.asset('assets/' + image)),
+            Expanded(
+              flex: 4,
+              child: Container(
                 padding: EdgeInsets.all(5),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
