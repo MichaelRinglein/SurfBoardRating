@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:surfboard_rating_pwa/classes/rating_box.dart';
+import 'product.dart';
 
 class ProductBox extends StatelessWidget {
 
-  ProductBox({Key key, this.name, this.description, this.price, this.image})
+  ProductBox({Key key, this.item})
       : super(key: key);
 
-  final String name;
-  final String description;
-  final int price;
-  final String image;
+  final Product item;
 
   //@override
   Widget build(BuildContext context) {
@@ -22,7 +20,7 @@ class ProductBox extends StatelessWidget {
           children: <Widget>[
             Expanded(
               flex: 2,
-              child: Image.asset('assets/' + image)),
+              child: Image.asset('assets/' + this.item.image)),
             Expanded(
               flex: 4,
               child: Container(
@@ -30,13 +28,13 @@ class ProductBox extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Text(this.name,
+                    Text(this.item.name,
                       style: TextStyle(
                         fontWeight: FontWeight.bold
                       ),
                     ),
-                    Text(this.description),
-                    Text('Price: ' + this.price.toString()),
+                    Text(this.item.description),
+                    Text('Price: ' + this.item.price.toString()),
                     RatingBox(),
                   ],
                 ),

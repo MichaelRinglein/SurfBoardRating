@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'classes/product.dart';
+import 'package:surfboard_rating_pwa/classes/product_page.dart';
 import 'package:surfboard_rating_pwa/classes/product_box.dart';
 
 void main() {
@@ -31,40 +33,29 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  final items = Product.getProducts();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Rate Haydenshapes Boards')),
-      body: ListView(
-        shrinkWrap: true,
-        padding: const EdgeInsets.fromLTRB(2.0, 10.0, 2.0, 10.0),
-        children: <Widget>[
-          ProductBox(
-            name: 'Hypto Krypto',
-            description: 'Nice board',
-            price: 600,
-            image: 'Haydenshapes-Hypto-Krypto.jpg'
-          ),
-          ProductBox(
-              name: 'Plunder',
-              description: 'Another Nice board',
-              price: 600,
-              image: 'Haydenshapes-Plunder.jpg'
-          ),
-          ProductBox(
-              name: 'Untitled',
-              description: 'Intermediate Board',
-              price: 600,
-              image: 'Haydenshapes-Untitled.jpg'
-          ),
-          ProductBox(
-              name: 'White Noiz',
-              description: 'Advanced Board',
-              price: 600,
-              image: 'Haydenshapes-White-Noiz.jpg'
-          ),
-        ],
+      body: ListView.builder(
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            child: ProductBox(item: items[index]),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProductPage(
+                    item: this.items[index]
+,                  )
+                )
+              );
+            }
+          );
+        },
       ),
     );
   }
