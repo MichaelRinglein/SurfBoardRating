@@ -9,7 +9,9 @@ class Product {
   Product(this.name, this.description, this.price, this.image);
 
   static List<Product> getProducts() {
+
     List<Product> items = <Product>[];
+
     items.add(
         Product(
             'Hypto Crypto',
@@ -28,7 +30,7 @@ class Product {
     );
     items.add(
         Product(
-            'White Noizr',
+            'White Noiz',
             'Something advanced',
             600,
             'Haydenshapes-White-Noiz.jpg'
