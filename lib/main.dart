@@ -1,15 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:surfboard_rating_pwa/classes/loading.dart';
 import 'package:surfboard_rating_pwa/classes/sign_in.dart';
 import 'package:surfboard_rating_pwa/services/auth.dart';
 import 'classes/product.dart';
 import 'classes/product_page.dart';
 import 'classes/product_box.dart';
 import 'package:firebase_core/firebase_core.dart';
-//import 'package:provider/provider.dart';
-
-
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,9 +17,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    //FirebaseAuth _auth = FirebaseAuth.instance;
-    Auth auth = Auth();
 
     return FutureBuilder(
       future: _initialization,
@@ -40,7 +32,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.blue,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            home:SignIn() //MyHomePage(title: 'Surfboard Ratings') /*MyHomePage(title: 'Flutter Demo Home Page')*/,
+            home: SignIn() //MyHomePage(title: 'Surfboard Ratings') /*MyHomePage(title: 'Flutter Demo Home Page')*/,
           );
         }
 

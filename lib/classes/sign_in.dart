@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:surfboard_rating_pwa/main.dart';
 import 'package:surfboard_rating_pwa/services/auth.dart';
 
 class SignIn extends StatefulWidget {
@@ -21,8 +22,12 @@ class _SignInState extends State<SignIn> {
           children: [
             RaisedButton(
               child: Text('Sign in anonymously'),
-              onPressed: () {
-                _auth.loginAnonym();
+              onPressed: () async {
+                await _auth.loginAnonym();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyHomePage(title: 'Successfully logged in')),
+                );
               },
             ),
             RaisedButton(

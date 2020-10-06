@@ -2,6 +2,7 @@ import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:surfboard_rating_pwa/main.dart';
 
 class Auth {
 
@@ -18,13 +19,11 @@ class Auth {
           print(user);
         }
     });
-    //return user;
   }
 
   Future loginAnonym() async {
     try {
       UserCredential userCredential = await _auth.signInAnonymously();
-      //return userCredential.user;
       print(user);
     } catch(e) {
       print(e.toString());
