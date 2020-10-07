@@ -1,4 +1,9 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:surfboard_rating_pwa/classes/loading.dart';
 import 'package:surfboard_rating_pwa/classes/sign_in.dart';
 import 'package:surfboard_rating_pwa/services/auth.dart';
 import 'classes/product.dart';
@@ -21,33 +26,27 @@ class MyApp extends StatelessWidget {
     return FutureBuilder(
       future: _initialization,
       builder: (context, snapshot) {
-        if(snapshot.hasError) {
+        if (snapshot.hasError) {
           return Container();
         }
 
-        if(snapshot.connectionState == ConnectionState.done) {
-          return MaterialApp(
-            title: 'Flutter Demo',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-              visualDensity: VisualDensity.adaptivePlatformDensity,
+        if (snapshot.connectionState == ConnectionState.done) {
+          return StreamProvider<User>.value(
+            value: Auth().user,
+            child: MaterialApp(
+              title: 'Flutter Demo',
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+                visualDensity: VisualDensity.adaptivePlatformDensity,
+              ),
+              home: MyHomePage(title: 'Successfully logged in'), //MyHomePage(title: 'Surfboard Ratings') /*MyHomePage(title: 'Flutter Demo Home Page')*/,
             ),
-            home: SignIn() //MyHomePage(title: 'Surfboard Ratings') /*MyHomePage(title: 'Flutter Demo Home Page')*/,
           );
         }
 
-        return MaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          home: SignIn(),//MyHomePage(title: 'Surfboard Ratings'),
-        );
+        return Loading();
 
-        //return Loading(); //return a spinner here later
-
-      },
+      }
     );
   }
 }
@@ -64,11 +63,61 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   final items = Product.getProducts();
+  final Auth _auth = Auth(); //not needed
+  User user;
+
 
   @override
   Widget build(BuildContext context) {
+    //print('_auth.user is: ' + _auth.cur); //not needed
+
+    final user = Provider.of<User>(context);
+    print('user.uid on main.dart is: ' + user.toString());
+
     return Scaffold(
       appBar: AppBar(title: Text('Rate Haydenshapes Boards')),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            user == null ?
+            UserAccountsDrawerHeader(
+              accountName: Text('Anonym'),
+              accountEmail: Text('nobody@anonym.com'),
+            )
+            :
+            UserAccountsDrawerHeader(
+                accountName: Text('uid: '+ user.uid),
+                accountEmail: Text('token: ' + user.refreshToken),
+            ),
+
+            user == null ?
+            ListTile(
+                leading: Icon(Icons.login),
+                title: Text('Login'),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignIn()
+                      )
+                  );
+                }
+            )
+            :
+            ListTile(
+                leading: Icon(Icons.logout),
+                title: Text('Logout'),
+                onTap: () async {
+                  await _auth.logOut();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignIn()
+                    )
+                  );
+                },
+            ),
+          ],
+        ),
+      ),
       body: ListView.builder(
         itemCount: items.length,
         itemBuilder: (context, index) {

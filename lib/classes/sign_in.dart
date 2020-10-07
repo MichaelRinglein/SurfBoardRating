@@ -21,19 +21,13 @@ class _SignInState extends State<SignIn> {
         child: Column(
           children: [
             RaisedButton(
-              child: Text('Sign in anonymously'),
+              child: Text('Login Anonymously'),
               onPressed: () async {
                 await _auth.loginAnonym();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => MyHomePage(title: 'Successfully logged in')),
                 );
-              },
-            ),
-            RaisedButton(
-              child: Text('Logout'),
-              onPressed: () {
-                _auth.logOut();
               },
             ),
           ],

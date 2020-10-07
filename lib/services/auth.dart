@@ -1,29 +1,27 @@
-import 'dart:js';
-
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:surfboard_rating_pwa/main.dart';
 
 class Auth {
 
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   Stream<User> get user {
-    _auth
-      .authStateChanges()
+    return _auth.authStateChanges();
+    /*
       .listen((User user) {
         if(user == null) {
           print('User is logged out');
         } else {
           print('User is logged in:');
-          print(user);
+          print(user.uid);
+          return user;
         }
     });
+    */
   }
 
   Future loginAnonym() async {
     try {
-      UserCredential userCredential = await _auth.signInAnonymously();
+      await _auth.signInAnonymously();
       print(user);
     } catch(e) {
       print(e.toString());
