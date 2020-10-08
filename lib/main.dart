@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:surfboard_rating_pwa/classes/loading.dart';
 import 'package:surfboard_rating_pwa/classes/sign_in.dart';
 import 'package:surfboard_rating_pwa/services/auth.dart';
+import 'package:surfboard_rating_pwa/services/firestore.dart';
 import 'classes/product.dart';
 import 'classes/product_page.dart';
 import 'classes/product_box.dart';
@@ -63,7 +64,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   final items = Product.getProducts();
-  final Auth _auth = Auth(); //not needed
+  final Auth _auth = Auth();
+  final Firestore _firestore = Firestore();
   User user;
 
 
@@ -114,6 +116,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     )
                   );
                 },
+            ),
+            ListTile(
+              leading: Icon(Icons.cloud_upload_outlined),
+              title: Text('Add Rating to database'),
+              onTap: () async {
+                await _firestore.addRating();
+              },
             ),
           ],
         ),

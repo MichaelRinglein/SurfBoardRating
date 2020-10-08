@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RatingBox extends StatefulWidget {
   @override
@@ -6,6 +7,7 @@ class RatingBox extends StatefulWidget {
 }
 
 class _RatingBoxState extends State<RatingBox> {
+
   int _rating = 0;
 
   void _setRatingOneStar() {
