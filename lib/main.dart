@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final items = Product.getProducts();
   final Auth _auth = Auth();
-  final Firestore _firestore = Firestore();
+  final FirestoreHandle _firestore = FirestoreHandle();
   User user;
 
 
@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
     //print('_auth.user is: ' + _auth.cur); //not needed
 
     final user = Provider.of<User>(context);
-    print('user.uid on main.dart is: ' + user.toString());
+    //print('user.uid on main.dart is: ' + user.toString());
 
     return Scaffold(
       appBar: AppBar(title: Text('Rate Haydenshapes Boards')),
@@ -117,13 +117,29 @@ class _MyHomePageState extends State<MyHomePage> {
                   );
                 },
             ),
+            /*
             ListTile(
               leading: Icon(Icons.cloud_upload_outlined),
               title: Text('Add Rating to database'),
               onTap: () async {
-                await _firestore.addRating();
+                await _firestore.addRating(user.uid.toString(), 8);
               },
             ),
+            ListTile(
+              leading: Icon(Icons.cloud_download_outlined),
+              title: Text('Pull Rating from database'),
+              onTap: () async {
+                await _firestore.getRating();
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.cloud_done_outlined),
+              title: Text('Update Rating in database'),
+              onTap: () async {
+                await _firestore.updateRating(user.uid.toString());
+              },
+            ),
+           */
           ],
         ),
       ),

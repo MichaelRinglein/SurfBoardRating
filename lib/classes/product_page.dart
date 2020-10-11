@@ -39,7 +39,7 @@ class ProductPage extends StatelessWidget {
                       ),
                       Text(this.item.description),
                       Text('Price: ' + this.item.price.toString()),
-                      RatingBox(),
+                      RatingBox(this.item.name),
                     ],
                   ),
                 ),

@@ -1,7 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+import 'package:surfboard_rating_pwa/services/firestore.dart';
 
 class RatingBox extends StatefulWidget {
+
+  String surfboard;
+
+  RatingBox(this.surfboard);
+
   @override
   _RatingBoxState createState() => _RatingBoxState();
 }
@@ -10,36 +18,43 @@ class _RatingBoxState extends State<RatingBox> {
 
   int _rating = 0;
 
-  void _setRatingOneStar() {
+  FirestoreHandle _firestore = FirestoreHandle();
+
+  void _setRatingOneStar(String user, String surfboard) {
     setState(() {
       _rating = 1;
     });
+    _firestore.addRating(user, 1, surfboard);
   }
-  void _setRatingTwoStar() {
+  void _setRatingTwoStar(String user, String surfboard) {
     setState(() {
       _rating = 2;
     });
+    _firestore.addRating(user, 2, surfboard);
   }
-  void _setRatingThreeStar() {
+  void _setRatingThreeStar(String user, String surfboard) {
     setState(() {
       _rating = 3;
     });
+    _firestore.addRating(user, 3, surfboard);
   }
-  void _setRatingFourStar() {
+  void _setRatingFourStar(String user, String surfboard) {
     setState(() {
       _rating = 4;
     });
+    _firestore.addRating(user, 4, surfboard);
   }
-  void _setRatingFiveStar() {
+  void _setRatingFiveStar(String user, String surfboard) {
     setState(() {
       _rating = 5;
     });
+    _firestore.addRating(user, 5, surfboard);
   }
 
   //@override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
     double _size = 20;
-    print(_rating);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -52,7 +67,9 @@ class _RatingBoxState extends State<RatingBox> {
             Icon(Icons.star, size: _size,) :
             Icon(Icons.star_border, size: _size)),
             color: Colors.orange,
-            onPressed: _setRatingOneStar,
+            onPressed: () {
+              _setRatingOneStar(user.uid.toString(), widget.surfboard);
+              },
             iconSize: _size,
           ),
         ),
@@ -63,7 +80,9 @@ class _RatingBoxState extends State<RatingBox> {
             Icon(Icons.star, size: _size,) :
             Icon(Icons.star_border, size: _size)),
             color: Colors.orange,
-            onPressed: _setRatingTwoStar,
+            onPressed: () {
+              _setRatingTwoStar(user.uid.toString(), widget.surfboard);
+            },
             iconSize: _size,
           ),
         ),
@@ -74,7 +93,9 @@ class _RatingBoxState extends State<RatingBox> {
             Icon(Icons.star, size: _size,) :
             Icon(Icons.star_border, size: _size)),
             color: Colors.orange,
-            onPressed: _setRatingThreeStar,
+            onPressed: () {
+              _setRatingThreeStar(user.uid.toString(), widget.surfboard);
+            },
             iconSize: _size,
           ),
         ),
@@ -85,7 +106,9 @@ class _RatingBoxState extends State<RatingBox> {
             Icon(Icons.star, size: _size,) :
             Icon(Icons.star_border, size: _size)),
             color: Colors.orange,
-            onPressed: _setRatingFourStar,
+            onPressed: () {
+              _setRatingFourStar(user.uid.toString(), widget.surfboard);
+            },
             iconSize: _size,
           ),
         ),
@@ -96,7 +119,9 @@ class _RatingBoxState extends State<RatingBox> {
             Icon(Icons.star, size: _size,) :
             Icon(Icons.star_border, size: _size)),
             color: Colors.orange,
-            onPressed: _setRatingFiveStar,
+            onPressed: () {
+              _setRatingFiveStar(user.uid.toString(), widget.surfboard);
+            },
             iconSize: _size,
           ),
         ),

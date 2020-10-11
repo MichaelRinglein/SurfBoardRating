@@ -12,7 +12,7 @@ class Product {
 
     items.add(
         Product(
-            'Hypto Crypto',
+            'Hypto Krypto',
             'Nice beginner board',
             600,
             'Haydenshapes-Hypto-Krypto.jpg'
