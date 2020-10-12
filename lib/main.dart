@@ -125,13 +125,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 await _firestore.addRating(user.uid.toString(), 8);
               },
             ),
+            */
             ListTile(
               leading: Icon(Icons.cloud_download_outlined),
               title: Text('Pull Rating from database'),
               onTap: () async {
-                await _firestore.getRating();
+                await _firestore.getRating(user.uid.toString(), 'Hypto Krypto');
               },
             ),
+            /*
             ListTile(
               leading: Icon(Icons.cloud_done_outlined),
               title: Text('Update Rating in database'),
