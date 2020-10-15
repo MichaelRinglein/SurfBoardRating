@@ -9,9 +9,9 @@ class FirestoreHandle {
 
   Future<void> addRating(String user, int rating, String surfboard) {
     return _ratings
-        .doc(surfboard)
+        .doc('users')
         .collection(user)
-        .doc('rating')
+        .doc(surfboard)
         .set({
           'user': user,
           'rating': rating,
@@ -23,17 +23,27 @@ class FirestoreHandle {
 
   Future<void> getRating(String user, String surfboard) {
     return _ratings
-        .doc(surfboard)
+        .doc('users')
         .collection(user)
-        .doc('rating')
+        .where('rating', isGreaterThan: 2)
+        //.doc(surfboard)
         .get()
+        .then((data) {
+          print(data.docs[0].data());
+          print(data.docs[1].data());
+        });
+
+/*
         .then((DocumentSnapshot documentSnapshot) {
           if (documentSnapshot.exists) {
-            print('Document data: ${documentSnapshot.data()}');
+            Map<String, dynamic> data = documentSnapshot.data();
+            print('User ${data['user']} rated surfboard ${data['surfboard']} with ${data['rating']} stars');
           } else {
             print('Document does not exist on the database');
           }
     });
+
+ */
   }
 
 

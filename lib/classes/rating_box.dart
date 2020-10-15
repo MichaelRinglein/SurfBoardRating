@@ -54,8 +54,6 @@ class _RatingBoxState extends State<RatingBox> {
   //@override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    //final result = _firestore.getRating(user.uid.toString(), widget.surfboard);
-    //print('result is: ' + result);
     double _size = 20;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
