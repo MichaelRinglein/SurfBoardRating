@@ -51,6 +51,26 @@ class _RatingBoxState extends State<RatingBox> {
     _firestore.addRating(user, 5, surfboard);
   }
 
+  void _showContent() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Sign in'),
+          content: Text('Please sign in to rate'),
+          actions: [
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ]
+        );
+      }
+    );
+  }
+
   //@override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
@@ -60,70 +80,149 @@ class _RatingBoxState extends State<RatingBox> {
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        Container(
-          padding: EdgeInsets.all(0),
-          child: IconButton(
-            icon: (_rating >= 1 ?
-            Icon(Icons.star, size: _size,) :
-            Icon(Icons.star_border, size: _size)),
-            color: Colors.orange,
-            onPressed: () {
-              _setRatingOneStar(user.uid.toString(), widget.surfboard);
-              },
-            iconSize: _size,
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.all(0),
-          child: IconButton(
-            icon: (_rating >= 2 ?
-            Icon(Icons.star, size: _size,) :
-            Icon(Icons.star_border, size: _size)),
-            color: Colors.orange,
-            onPressed: () {
-              _setRatingTwoStar(user.uid.toString(), widget.surfboard);
-            },
-            iconSize: _size,
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.all(0),
-          child: IconButton(
-            icon: (_rating >= 3 ?
-            Icon(Icons.star, size: _size,) :
-            Icon(Icons.star_border, size: _size)),
-            color: Colors.orange,
-            onPressed: () {
-              _setRatingThreeStar(user.uid.toString(), widget.surfboard);
-            },
-            iconSize: _size,
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.all(0),
-          child: IconButton(
-            icon: (_rating >= 4 ?
-            Icon(Icons.star, size: _size,) :
-            Icon(Icons.star_border, size: _size)),
-            color: Colors.orange,
-            onPressed: () {
-              _setRatingFourStar(user.uid.toString(), widget.surfboard);
-            },
-            iconSize: _size,
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.all(0),
-          child: IconButton(
-            icon: (_rating >= 5 ?
-            Icon(Icons.star, size: _size,) :
-            Icon(Icons.star_border, size: _size)),
-            color: Colors.orange,
-            onPressed: () {
-              _setRatingFiveStar(user.uid.toString(), widget.surfboard);
-            },
-            iconSize: _size,
-          ),
+        user != null ?
+          Column(
+            children: [
+              Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(0),
+                    child: IconButton(
+                      icon: (_rating >= 1 ?
+                      Icon(Icons.star, size: _size,) :
+                      Icon(Icons.star_border, size: _size)),
+                      color: Colors.orange,
+                      onPressed: () {
+                        _setRatingOneStar(user.uid.toString(), widget.surfboard);
+                      },
+                      iconSize: _size,
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(0),
+                    child: IconButton(
+                      icon: (_rating >= 2 ?
+                      Icon(Icons.star, size: _size,) :
+                      Icon(Icons.star_border, size: _size)),
+                      color: Colors.orange,
+                      onPressed: () {
+                        _setRatingTwoStar(user.uid.toString(), widget.surfboard);
+                      },
+                      iconSize: _size,
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(0),
+                    child: IconButton(
+                      icon: (_rating >= 3 ?
+                      Icon(Icons.star, size: _size,) :
+                      Icon(Icons.star_border, size: _size)),
+                      color: Colors.orange,
+                      onPressed: () {
+                        _setRatingThreeStar(user.uid.toString(), widget.surfboard);
+                      },
+                      iconSize: _size,
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(0),
+                    child: IconButton(
+                      icon: (_rating >= 4 ?
+                      Icon(Icons.star, size: _size,) :
+                      Icon(Icons.star_border, size: _size)),
+                      color: Colors.orange,
+                      onPressed: () {
+                        _setRatingFourStar(user.uid.toString(), widget.surfboard);
+                      },
+                      iconSize: _size,
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(0),
+                    child: IconButton(
+                      icon: (_rating >= 5 ?
+                      Icon(Icons.star, size: _size,) :
+                      Icon(Icons.star_border, size: _size)),
+                      color: Colors.orange,
+                      onPressed: () {
+                        _setRatingFiveStar(user.uid.toString(), widget.surfboard);
+                      },
+                      iconSize: _size,
+                    ),
+                  ),
+                ]
+              ),
+            ],
+          )
+          :
+          Row(
+            children: [
+              Container(
+                padding: EdgeInsets.all(0),
+                child: IconButton(
+                  icon: (_rating >= 1 ?
+                  Icon(Icons.star, size: _size,) :
+                  Icon(Icons.star_border, size: _size)),
+                  color: Colors.grey,
+                  iconSize: _size,
+                  onPressed: () {
+                    _showContent();
+                  },
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(0),
+                child: IconButton(
+                  icon: (_rating >= 2 ?
+                  Icon(Icons.star, size: _size,) :
+                  Icon(Icons.star_border, size: _size)),
+                  color: Colors.grey,
+                  iconSize: _size,
+                  onPressed: () {
+                    _showContent();
+                  },
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(0),
+                child: IconButton(
+                  icon: (_rating >= 3 ?
+                  Icon(Icons.star, size: _size,) :
+                  Icon(Icons.star_border, size: _size)),
+                  color: Colors.grey,
+                  iconSize: _size,
+                  onPressed: () {
+                    _showContent();
+                  },
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(0),
+                child: IconButton(
+                  icon: (_rating >= 4 ?
+                  Icon(Icons.star, size: _size,) :
+                  Icon(Icons.star_border, size: _size)),
+                  color: Colors.grey,
+                  iconSize: _size,
+                  onPressed: () {
+                    _showContent();
+                  },
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(0),
+                child: IconButton(
+                  icon: (_rating >= 5 ?
+                  Icon(Icons.star, size: _size,) :
+                  Icon(Icons.star_border, size: _size)),
+                  color: Colors.grey,
+                  iconSize: _size,
+                  onPressed: () {
+                    _showContent();
+                  },
+                ),
+              ),
+            ],
         ),
       ]
     );

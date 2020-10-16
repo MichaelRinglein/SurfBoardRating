@@ -121,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
               leading: Icon(Icons.cloud_download_outlined),
               title: Text('Pull Rating from database'),
               onTap: () async {
-                await _firestore.getRating(user.uid.toString(), 'Hypto Krypto');
+                await _firestore.getRating(user.uid.toString(), 'White Noiz');
               },
             ),
           ],
