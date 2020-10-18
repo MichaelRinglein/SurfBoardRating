@@ -73,158 +73,166 @@ class _RatingBoxState extends State<RatingBox> {
 
   //@override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    final user = Provider.of<User>(context); //needed later?
+    final rating = Provider.of<QuerySnapshot>(context);
+    print('ratings are:');
+    for(var doc in rating.docs) {
+      print(doc.data);
+    }
     double _size = 20;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        user != null ?
-          Column(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(0),
-                    child: IconButton(
-                      icon: (_rating >= 1 ?
-                      Icon(Icons.star, size: _size,) :
-                      Icon(Icons.star_border, size: _size)),
-                      color: Colors.orange,
-                      onPressed: () {
-                        _setRatingOneStar(user.uid.toString(), widget.surfboard);
-                      },
-                      iconSize: _size,
+    return StreamProvider<QuerySnapshot>.value(
+      value: _firestore.ratings,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          user != null ?
+            Column(
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(0),
+                      child: IconButton(
+                        icon: (_rating >= 1 ?
+                        Icon(Icons.star, size: _size,) :
+                        Icon(Icons.star_border, size: _size)),
+                        color: Colors.orange,
+                        onPressed: () {
+                          _setRatingOneStar(user.uid.toString(), widget.surfboard);
+                        },
+                        iconSize: _size,
+                      ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(0),
-                    child: IconButton(
-                      icon: (_rating >= 2 ?
-                      Icon(Icons.star, size: _size,) :
-                      Icon(Icons.star_border, size: _size)),
-                      color: Colors.orange,
-                      onPressed: () {
-                        _setRatingTwoStar(user.uid.toString(), widget.surfboard);
-                      },
-                      iconSize: _size,
+                    Container(
+                      padding: EdgeInsets.all(0),
+                      child: IconButton(
+                        icon: (_rating >= 2 ?
+                        Icon(Icons.star, size: _size,) :
+                        Icon(Icons.star_border, size: _size)),
+                        color: Colors.orange,
+                        onPressed: () {
+                          _setRatingTwoStar(user.uid.toString(), widget.surfboard);
+                        },
+                        iconSize: _size,
+                      ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(0),
-                    child: IconButton(
-                      icon: (_rating >= 3 ?
-                      Icon(Icons.star, size: _size,) :
-                      Icon(Icons.star_border, size: _size)),
-                      color: Colors.orange,
-                      onPressed: () {
-                        _setRatingThreeStar(user.uid.toString(), widget.surfboard);
-                      },
-                      iconSize: _size,
+                    Container(
+                      padding: EdgeInsets.all(0),
+                      child: IconButton(
+                        icon: (_rating >= 3 ?
+                        Icon(Icons.star, size: _size,) :
+                        Icon(Icons.star_border, size: _size)),
+                        color: Colors.orange,
+                        onPressed: () {
+                          _setRatingThreeStar(user.uid.toString(), widget.surfboard);
+                        },
+                        iconSize: _size,
+                      ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(0),
-                    child: IconButton(
-                      icon: (_rating >= 4 ?
-                      Icon(Icons.star, size: _size,) :
-                      Icon(Icons.star_border, size: _size)),
-                      color: Colors.orange,
-                      onPressed: () {
-                        _setRatingFourStar(user.uid.toString(), widget.surfboard);
-                      },
-                      iconSize: _size,
+                    Container(
+                      padding: EdgeInsets.all(0),
+                      child: IconButton(
+                        icon: (_rating >= 4 ?
+                        Icon(Icons.star, size: _size,) :
+                        Icon(Icons.star_border, size: _size)),
+                        color: Colors.orange,
+                        onPressed: () {
+                          _setRatingFourStar(user.uid.toString(), widget.surfboard);
+                        },
+                        iconSize: _size,
+                      ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(0),
-                    child: IconButton(
-                      icon: (_rating >= 5 ?
-                      Icon(Icons.star, size: _size,) :
-                      Icon(Icons.star_border, size: _size)),
-                      color: Colors.orange,
-                      onPressed: () {
-                        _setRatingFiveStar(user.uid.toString(), widget.surfboard);
-                      },
-                      iconSize: _size,
+                    Container(
+                      padding: EdgeInsets.all(0),
+                      child: IconButton(
+                        icon: (_rating >= 5 ?
+                        Icon(Icons.star, size: _size,) :
+                        Icon(Icons.star_border, size: _size)),
+                        color: Colors.orange,
+                        onPressed: () {
+                          _setRatingFiveStar(user.uid.toString(), widget.surfboard);
+                        },
+                        iconSize: _size,
+                      ),
                     ),
+                  ]
+                ),
+              ],
+            )
+            :
+            Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(0),
+                  child: IconButton(
+                    icon: (_rating >= 1 ?
+                    Icon(Icons.star, size: _size,) :
+                    Icon(Icons.star_border, size: _size)),
+                    color: Colors.grey,
+                    iconSize: _size,
+                    onPressed: () {
+                      _showContent();
+                    },
                   ),
-                ]
-              ),
-            ],
-          )
-          :
-          Row(
-            children: [
-              Container(
-                padding: EdgeInsets.all(0),
-                child: IconButton(
-                  icon: (_rating >= 1 ?
-                  Icon(Icons.star, size: _size,) :
-                  Icon(Icons.star_border, size: _size)),
-                  color: Colors.grey,
-                  iconSize: _size,
-                  onPressed: () {
-                    _showContent();
-                  },
                 ),
-              ),
-              Container(
-                padding: EdgeInsets.all(0),
-                child: IconButton(
-                  icon: (_rating >= 2 ?
-                  Icon(Icons.star, size: _size,) :
-                  Icon(Icons.star_border, size: _size)),
-                  color: Colors.grey,
-                  iconSize: _size,
-                  onPressed: () {
-                    _showContent();
-                  },
+                Container(
+                  padding: EdgeInsets.all(0),
+                  child: IconButton(
+                    icon: (_rating >= 2 ?
+                    Icon(Icons.star, size: _size,) :
+                    Icon(Icons.star_border, size: _size)),
+                    color: Colors.grey,
+                    iconSize: _size,
+                    onPressed: () {
+                      _showContent();
+                    },
+                  ),
                 ),
-              ),
-              Container(
-                padding: EdgeInsets.all(0),
-                child: IconButton(
-                  icon: (_rating >= 3 ?
-                  Icon(Icons.star, size: _size,) :
-                  Icon(Icons.star_border, size: _size)),
-                  color: Colors.grey,
-                  iconSize: _size,
-                  onPressed: () {
-                    _showContent();
-                  },
+                Container(
+                  padding: EdgeInsets.all(0),
+                  child: IconButton(
+                    icon: (_rating >= 3 ?
+                    Icon(Icons.star, size: _size,) :
+                    Icon(Icons.star_border, size: _size)),
+                    color: Colors.grey,
+                    iconSize: _size,
+                    onPressed: () {
+                      _showContent();
+                    },
+                  ),
                 ),
-              ),
-              Container(
-                padding: EdgeInsets.all(0),
-                child: IconButton(
-                  icon: (_rating >= 4 ?
-                  Icon(Icons.star, size: _size,) :
-                  Icon(Icons.star_border, size: _size)),
-                  color: Colors.grey,
-                  iconSize: _size,
-                  onPressed: () {
-                    _showContent();
-                  },
+                Container(
+                  padding: EdgeInsets.all(0),
+                  child: IconButton(
+                    icon: (_rating >= 4 ?
+                    Icon(Icons.star, size: _size,) :
+                    Icon(Icons.star_border, size: _size)),
+                    color: Colors.grey,
+                    iconSize: _size,
+                    onPressed: () {
+                      _showContent();
+                    },
+                  ),
                 ),
-              ),
-              Container(
-                padding: EdgeInsets.all(0),
-                child: IconButton(
-                  icon: (_rating >= 5 ?
-                  Icon(Icons.star, size: _size,) :
-                  Icon(Icons.star_border, size: _size)),
-                  color: Colors.grey,
-                  iconSize: _size,
-                  onPressed: () {
-                    _showContent();
-                  },
+                Container(
+                  padding: EdgeInsets.all(0),
+                  child: IconButton(
+                    icon: (_rating >= 5 ?
+                    Icon(Icons.star, size: _size,) :
+                    Icon(Icons.star_border, size: _size)),
+                    color: Colors.grey,
+                    iconSize: _size,
+                    onPressed: () {
+                      _showContent();
+                    },
+                  ),
                 ),
-              ),
-            ],
-        ),
-      ]
+              ],
+          ),
+        ]
+      ),
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +14,12 @@ import 'package:firebase_core/firebase_core.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  runApp(
+    StreamProvider<QuerySnapshot>.value(
+      value: FirestoreHandle().ratings,
+      child: MyApp(),
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -71,10 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //print('_auth.user is: ' + _auth.cur); //not needed
-
     final user = Provider.of<User>(context);
-    //print('user.uid on main.dart is: ' + user.toString());
 
     return Scaffold(
       appBar: AppBar(title: Text('Rate Haydenshapes Boards')),

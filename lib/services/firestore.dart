@@ -7,6 +7,11 @@ class FirestoreHandle {
 
   CollectionReference _ratings = FirebaseFirestore.instance.collection('ratings');
 
+  Stream<FirestoreHandle> get _rating {
+    return _rating;
+    print('Rating in Stream provider is: $_rating');
+  }
+
   Future<void> addRating(String user, int rating, String surfboard) {
     return _ratings
         .doc('users')
@@ -29,8 +34,14 @@ class FirestoreHandle {
       .doc(surfboard)
       .get()
       .then((data) {
-        print(data.data());
+        print(data.data()['rating']);
+        print(data.data()['rating'].runtimeType);
+        return data.data()['rating'];
         //print(data.docs[1].data());
       });
+  }
+
+  Stream<QuerySnapshot> get ratings {
+    return _ratings.snapshots();
   }
 }
