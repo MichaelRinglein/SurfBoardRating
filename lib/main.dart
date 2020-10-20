@@ -14,12 +14,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(
-    StreamProvider<QuerySnapshot>.value(
-      value: FirestoreHandle().ratings,
-      child: MyApp(),
-    )
-  );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -35,7 +30,6 @@ class MyApp extends StatelessWidget {
         if (snapshot.hasError) {
           return Container();
         }
-
         if (snapshot.connectionState == ConnectionState.done) {
           return StreamProvider<User>.value(
             value: Auth().user,
@@ -45,13 +39,11 @@ class MyApp extends StatelessWidget {
                 primarySwatch: Colors.blue,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
-              home: MyHomePage(title: 'Successfully logged in'), //MyHomePage(title: 'Surfboard Ratings') /*MyHomePage(title: 'Flutter Demo Home Page')*/,
+              home: MyHomePage(title: 'Successfully logged in'),
             ),
           );
         }
-
         return Loading();
-
       }
     );
   }
@@ -67,17 +59,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   final items = Product.getProducts();
   final Auth _auth = Auth();
-  final FirestoreHandle _firestore = FirestoreHandle();
+  //final FirestoreHandle _firestore = FirestoreHandle();
   User user;
-
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-
     return Scaffold(
       appBar: AppBar(title: Text('Rate Haydenshapes Boards')),
       drawer: Drawer(
@@ -90,40 +79,32 @@ class _MyHomePageState extends State<MyHomePage> {
             )
             :
             UserAccountsDrawerHeader(
-                accountName: Text('uid: '+ user.uid),
-                accountEmail: Text('token: ' + user.refreshToken),
+              accountName: Text('uid: '+ user.uid),
+              accountEmail: Text('token: ' + user.refreshToken),
             ),
-
             user == null ?
             ListTile(
-                leading: Icon(Icons.login),
-                title: Text('Login'),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignIn()
-                      )
-                  );
-                }
+              leading: Icon(Icons.login),
+              title: Text('Login'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignIn()
+                  )
+                );
+              }
             )
             :
             ListTile(
-                leading: Icon(Icons.logout),
-                title: Text('Logout'),
-                onTap: () async {
-                  await _auth.logOut();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SignIn()
-                    )
-                  );
-                },
-            ),
-            ListTile(
-              leading: Icon(Icons.cloud_download_outlined),
-              title: Text('Pull Rating from database'),
+              leading: Icon(Icons.logout),
+              title: Text('Logout'),
               onTap: () async {
-                await _firestore.getRating(user.uid.toString(), 'White Noiz');
+                await _auth.logOut();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignIn()
+                  )
+                );
               },
             ),
           ],

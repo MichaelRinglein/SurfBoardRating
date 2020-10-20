@@ -20,35 +20,38 @@ class _RatingBoxState extends State<RatingBox> {
 
   FirestoreHandle _firestore = FirestoreHandle();
 
-  void _setRatingOneStar(String user, String surfboard) {
+  void _setRatingOneStar(String user, String surfboard) async {
+    await _firestore.addRating(user, 1, surfboard);
     setState(() {
       _rating = 1;
     });
-    _firestore.addRating(user, 1, surfboard);
+
   }
-  void _setRatingTwoStar(String user, String surfboard) {
+  void _setRatingTwoStar(String user, String surfboard) async {
+    await _firestore.addRating(user, 2, surfboard);
     setState(() {
       _rating = 2;
     });
-    _firestore.addRating(user, 2, surfboard);
+
   }
-  void _setRatingThreeStar(String user, String surfboard) {
+  void _setRatingThreeStar(String user, String surfboard) async {
+    await _firestore.addRating(user, 3, surfboard);
     setState(() {
       _rating = 3;
     });
-    _firestore.addRating(user, 3, surfboard);
   }
-  void _setRatingFourStar(String user, String surfboard) {
+  void _setRatingFourStar(String user, String surfboard) async {
+    await _firestore.addRating(user, 4, surfboard);
     setState(() {
       _rating = 4;
     });
-    _firestore.addRating(user, 4, surfboard);
+
   }
-  void _setRatingFiveStar(String user, String surfboard) {
+  void _setRatingFiveStar(String user, String surfboard) async {
+    await _firestore.addRating(user, 5, surfboard);
     setState(() {
       _rating = 5;
     });
-    _firestore.addRating(user, 5, surfboard);
   }
 
   void _showContent() {
@@ -73,166 +76,187 @@ class _RatingBoxState extends State<RatingBox> {
 
   //@override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context); //needed later?
-    final rating = Provider.of<QuerySnapshot>(context);
-    print('ratings are:');
-    for(var doc in rating.docs) {
-      print(doc.data);
-    }
+    final user = Provider.of<User>(context);
+    CollectionReference _ratings = FirebaseFirestore.instance.collection('ratings');
     double _size = 20;
-    return StreamProvider<QuerySnapshot>.value(
-      value: _firestore.ratings,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          user != null ?
-            Column(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(0),
-                      child: IconButton(
-                        icon: (_rating >= 1 ?
-                        Icon(Icons.star, size: _size,) :
-                        Icon(Icons.star_border, size: _size)),
-                        color: Colors.orange,
-                        onPressed: () {
-                          _setRatingOneStar(user.uid.toString(), widget.surfboard);
-                        },
-                        iconSize: _size,
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(0),
-                      child: IconButton(
-                        icon: (_rating >= 2 ?
-                        Icon(Icons.star, size: _size,) :
-                        Icon(Icons.star_border, size: _size)),
-                        color: Colors.orange,
-                        onPressed: () {
-                          _setRatingTwoStar(user.uid.toString(), widget.surfboard);
-                        },
-                        iconSize: _size,
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(0),
-                      child: IconButton(
-                        icon: (_rating >= 3 ?
-                        Icon(Icons.star, size: _size,) :
-                        Icon(Icons.star_border, size: _size)),
-                        color: Colors.orange,
-                        onPressed: () {
-                          _setRatingThreeStar(user.uid.toString(), widget.surfboard);
-                        },
-                        iconSize: _size,
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(0),
-                      child: IconButton(
-                        icon: (_rating >= 4 ?
-                        Icon(Icons.star, size: _size,) :
-                        Icon(Icons.star_border, size: _size)),
-                        color: Colors.orange,
-                        onPressed: () {
-                          _setRatingFourStar(user.uid.toString(), widget.surfboard);
-                        },
-                        iconSize: _size,
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(0),
-                      child: IconButton(
-                        icon: (_rating >= 5 ?
-                        Icon(Icons.star, size: _size,) :
-                        Icon(Icons.star_border, size: _size)),
-                        color: Colors.orange,
-                        onPressed: () {
-                          _setRatingFiveStar(user.uid.toString(), widget.surfboard);
-                        },
-                        iconSize: _size,
-                      ),
+    if(user != null) {
+      return FutureBuilder<DocumentSnapshot>(
+          future: _ratings
+              .doc('users')
+              .collection(user.uid)
+              .doc(widget.surfboard)
+              .get(),
+          builder:
+              (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return Text('something went wrong');
+            }
+            if (snapshot.connectionState == ConnectionState.done) {
+              Map<String, dynamic> data = snapshot.data.data();
+              print('data is now: ${data}');
+              data['rating'] != null ? _rating = data['rating'] : _rating = 0;
+              return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    user != null ?
+                    Column(
+                      children: [
+                        Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(0),
+                                child: IconButton(
+                                  icon: (_rating >= 1 ?
+                                  Icon(Icons.star, size: _size,) :
+                                  Icon(Icons.star_border, size: _size)),
+                                  color: Colors.orange,
+                                  onPressed: () {
+                                    _setRatingOneStar(
+                                        user.uid.toString(), widget.surfboard);
+                                  },
+                                  iconSize: _size,
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(0),
+                                child: IconButton(
+                                  icon: (_rating >= 2 ?
+                                  Icon(Icons.star, size: _size,) :
+                                  Icon(Icons.star_border, size: _size)),
+                                  color: Colors.orange,
+                                  onPressed: () {
+                                    _setRatingTwoStar(
+                                        user.uid.toString(), widget.surfboard);
+                                  },
+                                  iconSize: _size,
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(0),
+                                child: IconButton(
+                                  icon: (_rating >= 3 ?
+                                  Icon(Icons.star, size: _size,) :
+                                  Icon(Icons.star_border, size: _size)),
+                                  color: Colors.orange,
+                                  onPressed: () {
+                                    _setRatingThreeStar(
+                                        user.uid.toString(), widget.surfboard);
+                                  },
+                                  iconSize: _size,
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(0),
+                                child: IconButton(
+                                  icon: (_rating >= 4 ?
+                                  Icon(Icons.star, size: _size,) :
+                                  Icon(Icons.star_border, size: _size)),
+                                  color: Colors.orange,
+                                  onPressed: () {
+                                    _setRatingFourStar(
+                                        user.uid.toString(), widget.surfboard);
+                                  },
+                                  iconSize: _size,
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(0),
+                                child: IconButton(
+                                  icon: (_rating >= 5 ?
+                                  Icon(Icons.star, size: _size,) :
+                                  Icon(Icons.star_border, size: _size)),
+                                  color: Colors.orange,
+                                  onPressed: () {
+                                    _setRatingFiveStar(
+                                        user.uid.toString(), widget.surfboard);
+                                  },
+                                  iconSize: _size,
+                                ),
+                              ),
+                            ]
+                        ),
+                      ],
+                    )
+                        :
+                    Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(0),
+                          child: IconButton(
+                            icon: (_rating >= 1 ?
+                            Icon(Icons.star, size: _size,) :
+                            Icon(Icons.star_border, size: _size)),
+                            color: Colors.grey,
+                            iconSize: _size,
+                            onPressed: () {
+                              _showContent();
+                            },
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(0),
+                          child: IconButton(
+                            icon: (_rating >= 2 ?
+                            Icon(Icons.star, size: _size,) :
+                            Icon(Icons.star_border, size: _size)),
+                            color: Colors.grey,
+                            iconSize: _size,
+                            onPressed: () {
+                              _showContent();
+                            },
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(0),
+                          child: IconButton(
+                            icon: (_rating >= 3 ?
+                            Icon(Icons.star, size: _size,) :
+                            Icon(Icons.star_border, size: _size)),
+                            color: Colors.grey,
+                            iconSize: _size,
+                            onPressed: () {
+                              _showContent();
+                            },
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(0),
+                          child: IconButton(
+                            icon: (_rating >= 4 ?
+                            Icon(Icons.star, size: _size,) :
+                            Icon(Icons.star_border, size: _size)),
+                            color: Colors.grey,
+                            iconSize: _size,
+                            onPressed: () {
+                              _showContent();
+                            },
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(0),
+                          child: IconButton(
+                            icon: (_rating >= 5 ?
+                            Icon(Icons.star, size: _size,) :
+                            Icon(Icons.star_border, size: _size)),
+                            color: Colors.grey,
+                            iconSize: _size,
+                            onPressed: () {
+                              _showContent();
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ]
-                ),
-              ],
-            )
-            :
-            Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(0),
-                  child: IconButton(
-                    icon: (_rating >= 1 ?
-                    Icon(Icons.star, size: _size,) :
-                    Icon(Icons.star_border, size: _size)),
-                    color: Colors.grey,
-                    iconSize: _size,
-                    onPressed: () {
-                      _showContent();
-                    },
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(0),
-                  child: IconButton(
-                    icon: (_rating >= 2 ?
-                    Icon(Icons.star, size: _size,) :
-                    Icon(Icons.star_border, size: _size)),
-                    color: Colors.grey,
-                    iconSize: _size,
-                    onPressed: () {
-                      _showContent();
-                    },
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(0),
-                  child: IconButton(
-                    icon: (_rating >= 3 ?
-                    Icon(Icons.star, size: _size,) :
-                    Icon(Icons.star_border, size: _size)),
-                    color: Colors.grey,
-                    iconSize: _size,
-                    onPressed: () {
-                      _showContent();
-                    },
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(0),
-                  child: IconButton(
-                    icon: (_rating >= 4 ?
-                    Icon(Icons.star, size: _size,) :
-                    Icon(Icons.star_border, size: _size)),
-                    color: Colors.grey,
-                    iconSize: _size,
-                    onPressed: () {
-                      _showContent();
-                    },
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(0),
-                  child: IconButton(
-                    icon: (_rating >= 5 ?
-                    Icon(Icons.star, size: _size,) :
-                    Icon(Icons.star_border, size: _size)),
-                    color: Colors.grey,
-                    iconSize: _size,
-                    onPressed: () {
-                      _showContent();
-                    },
-                  ),
-                ),
-              ],
-          ),
-        ]
-      ),
-    );
+              );
+            }
+            return Text('Loading');
+          }
+      );
+    } else {
+      _firestore.addRating(user.uid, 0, widget.surfboard);
+    }
   }
 }
