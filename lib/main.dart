@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return FutureBuilder(
       future: _initialization,
       builder: (context, snapshot) {
@@ -61,12 +60,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final items = Product.getProducts();
   final Auth _auth = Auth();
-  //final FirestoreHandle _firestore = FirestoreHandle();
+  final FirestoreHandle _firestore = FirestoreHandle();
   User user;
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
+
     return Scaffold(
       appBar: AppBar(title: Text('Rate Haydenshapes Boards')),
       drawer: Drawer(

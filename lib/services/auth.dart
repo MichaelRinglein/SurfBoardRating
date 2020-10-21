@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:surfboard_rating_pwa/classes/rating_box.dart';
+import 'package:surfboard_rating_pwa/services/firestore.dart';
 
 class Auth {
 
@@ -11,7 +14,6 @@ class Auth {
   Future loginAnonym() async {
     try {
       await _auth.signInAnonymously();
-      print(user);
     } catch(e) {
       print(e.toString());
     }
