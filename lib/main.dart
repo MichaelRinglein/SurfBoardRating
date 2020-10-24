@@ -73,19 +73,13 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(title: Text('Rate Haydenshapes Boards')),
       drawer: Drawer(
-        child: ListView(
+        child:
+        user == null ?
+        ListView(
           children: [
-            user == null ?
             UserAccountsDrawerHeader(
-              accountName: Text('Anonym'),
-              accountEmail: Text('nobody@anonym.com'),
-            )
-            :
-            UserAccountsDrawerHeader(
-              accountName: Text('uid: '+ user.uid),
-              accountEmail: Text('token: ' + user.refreshToken),
+              accountName: Text('Not logged in'),
             ),
-            user == null ?
             ListTile(
               leading: Icon(Icons.login),
               title: Text('Login'),
@@ -97,21 +91,38 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               }
             )
-            :
-            ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Logout'),
-              onTap: () async {
-                await _auth.logOut();
-                Navigator.push(
+          ],
+        )
+        :
+        ListView(
+        children: [
+          user.isAnonymous == true ?
+          UserAccountsDrawerHeader(
+            accountName: Text('Anonym'),
+            accountEmail: Text('nobody@anonym.com'),
+          )
+          :
+          UserAccountsDrawerHeader(
+            currentAccountPicture: CircleAvatar(
+              backgroundImage: NetworkImage(user.photoURL),
+            ),
+            accountName: Text(user.displayName),
+            accountEmail: Text(user.email),
+          ),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text('Logout'),
+            onTap: () async {
+              await _auth.logOut();
+              Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => SignIn()
                   )
-                );
-              },
-            ),
-          ],
-        ),
+              );
+            },
+          ),
+        ],
+      )
       ),
       body: ListView.builder(
         itemCount: items.length,
