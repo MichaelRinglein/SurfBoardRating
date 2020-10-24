@@ -19,11 +19,22 @@ class _SignInState extends State<SignIn> {
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             RaisedButton(
               child: Text('Login Anonymously'),
               onPressed: () async {
                 await _auth.loginAnonym();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyHomePage(title: 'Successfully logged in')),
+                );
+              },
+            ),
+            RaisedButton(
+              child: Text('Login with Google'),
+              onPressed: () async {
+                await _auth.loginWithGoogle();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => MyHomePage(title: 'Successfully logged in')),

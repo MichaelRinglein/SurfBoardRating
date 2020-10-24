@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
+import 'package:surfboard_rating_pwa/classes/sign_in.dart';
+import 'package:surfboard_rating_pwa/main.dart';
 import 'package:surfboard_rating_pwa/services/firestore.dart';
 
 class RatingBox extends StatefulWidget {
@@ -61,9 +63,17 @@ class _RatingBoxState extends State<RatingBox> {
           content: Text('Please sign in to rate'),
           actions: [
             FlatButton(
-              child: Text('OK'),
+              child: Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('Log In'),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => SignIn()),
+                );
               },
             ),
           ]

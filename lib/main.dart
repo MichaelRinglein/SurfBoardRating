@@ -42,6 +42,9 @@ class MyApp extends StatelessWidget {
             ),
           );
         }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Loading();
+        }
         return Loading();
       }
     );
@@ -60,7 +63,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final items = Product.getProducts();
   final Auth _auth = Auth();
-  final FirestoreHandle _firestore = FirestoreHandle();
+  //final FirestoreHandle _firestore = FirestoreHandle();
   User user;
 
   @override
