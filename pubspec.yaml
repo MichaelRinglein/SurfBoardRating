@@ -55,6 +55,8 @@ flutter:
     - assets/Haydenshapes-Plunder.jpg
     - assets/Haydenshapes-Untitled.jpg
     - assets/Haydenshapes-White-Noiz.jpg
+    - assets/wave-right.png
+    - assets/waves-login.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
