@@ -33,15 +33,36 @@ class _SignInState extends State<SignIn> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          backgroundColor: Color(0xFFA8DFE5),
           title: Text('Login In / Sign Up'),
+          backgroundColor: const Color(0xff4ba3a4),
         ),
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              Text(
+                'Rate your Surfboard',
+                style: TextStyle(
+                  fontFamily: 'Impact',
+                  fontSize: 188,
+                  color: const Color(0xff4ba3a4),
+                ),
+                textAlign: TextAlign.left,
+              ),
+              SizedBox( height: 130 ),
               RaisedButton(
-                child: Text('Login Anonymously'),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(80.0),
+                ),
+                color: const Color(0xe6f2ca9a),
+                padding: EdgeInsets.all(20),
+                child: Text(
+                  'Login Anonymously',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
+                ),
                 onPressed: () async {
                   await _auth.loginAnonym();
                   Navigator.push(
@@ -50,8 +71,20 @@ class _SignInState extends State<SignIn> {
                   );
                 },
               ),
+              SizedBox( height: 20 ),
               RaisedButton(
-                child: Text('Login with Google'),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(80.0),
+                ),
+                color: const Color(0xe6f2ca9a),
+                padding: EdgeInsets.all(20),
+                child: Text(
+                  'Login with Google',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
+                ),
                 onPressed: () async {
                   await _auth.loginWithGoogle();
                   Navigator.push(

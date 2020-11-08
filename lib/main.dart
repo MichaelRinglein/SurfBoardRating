@@ -71,18 +71,40 @@ class _MyHomePageState extends State<MyHomePage> {
     final user = Provider.of<User>(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text('Rate Haydenshapes Boards')),
+      appBar: AppBar(
+        title: Text('Rate Haydenshapes Boards'),
+        backgroundColor: const Color(0xff4ba3a4),
+      ),
       drawer: Drawer(
         child:
         user == null ?
         ListView(
           children: [
             UserAccountsDrawerHeader(
-              accountName: Text('Not logged in'),
+              accountName: Text(
+                'Not logged in',
+                style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                ),
+              ),
+              decoration: BoxDecoration(
+                color: const Color(0xffeec08a),
+              ),
             ),
             ListTile(
-              leading: Icon(Icons.login),
-              title: Text('Login'),
+              leading: Icon(
+                Icons.login,
+                color: Colors.white,
+              ),
+              title: Text(
+                'Login',
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.white,
+                ),
+              ),
+              tileColor: const Color(0xffeec08a),
               onTap: () {
                 Navigator.push(
                   context,
@@ -98,20 +120,47 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           user.isAnonymous == true ?
           UserAccountsDrawerHeader(
-            accountName: Text('Anonym'),
+            accountName: Text(
+              'Anonym',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
             accountEmail: Text('nobody@anonym.com'),
+            decoration: BoxDecoration(
+              color: const Color(0xffeec08a),
+            ),
           )
           :
           UserAccountsDrawerHeader(
             currentAccountPicture: CircleAvatar(
               backgroundImage: NetworkImage(user.photoURL),
             ),
-            accountName: Text(user.displayName),
+            accountName: Text(user.displayName,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
             accountEmail: Text(user.email),
+            decoration: BoxDecoration(
+              color: const Color(0xffeec08a),
+            ),
           ),
           ListTile(
-            leading: Icon(Icons.logout),
-            title: Text('Logout'),
+            leading: Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
+            title: Text(
+              'Logout',
+              style: TextStyle(
+              fontSize: 15,
+              color: Colors.white,
+              ),
+            ),
+            tileColor: const Color(0xffeec08a),
             onTap: () async {
               await _auth.logOut();
               Navigator.push(
