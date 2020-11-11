@@ -44,7 +44,7 @@ class _SignInState extends State<SignIn> {
                 'Rate your Surfboard',
                 style: TextStyle(
                   fontFamily: 'Impact',
-                  fontSize: 188,
+                  fontSize: 18,
                   color: const Color(0xff4ba3a4),
                 ),
                 textAlign: TextAlign.left,

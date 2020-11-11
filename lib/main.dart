@@ -11,6 +11,7 @@ import 'classes/product.dart';
 import 'classes/product_page.dart';
 import 'classes/product_box.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:adobe_xd/adobe_xd.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -72,8 +73,27 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Rate Haydenshapes Boards'),
-        backgroundColor: const Color(0xff4ba3a4),
+        title: Text(
+          'Rate Haydenshapes Boards',
+          style: TextStyle(
+            fontFamily: 'Roboto',
+            color: const Color(0xfff8f5f5),
+            fontWeight: FontWeight.w700,
+          ),
+          textAlign: TextAlign.left,
+        ),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: RadialGradient(
+              center: Alignment(-0.98, 0.0),
+              radius: 0.602,
+              colors: [const Color(0xffa8dfe5), const Color(0xff4ba3a4)],
+              stops: [0.0, 1.0],
+              transform: GradientXDTransform(
+                  1.0, 0.0, 0.0, 4.98, 0.0, -1.99, Alignment(-0.98, 0.0)),
+            ),
+          ),
+        ),
       ),
       drawer: Drawer(
         child:

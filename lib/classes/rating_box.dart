@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:surfboard_rating_pwa/classes/sign_in.dart';
-import 'package:surfboard_rating_pwa/main.dart';
 import 'package:surfboard_rating_pwa/services/firestore.dart';
 
 class RatingBox extends StatefulWidget {
@@ -86,7 +85,7 @@ class _RatingBoxState extends State<RatingBox> {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     CollectionReference _ratings = FirebaseFirestore.instance.collection('ratings');
-    double _size = 20;
+    double _size = 40;
     if(user != null) {
       return FutureBuilder<DocumentSnapshot>(
           future: _ratings

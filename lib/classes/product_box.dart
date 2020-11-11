@@ -9,39 +9,56 @@ class ProductBox extends StatelessWidget {
 
   final Product item;
 
-  //@override
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(2),
-      height: 120,
-      child: Card(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Expanded(
-              flex: 2,
-              child: Image.asset('assets/' + this.item.image)),
-            Expanded(
-              flex: 4,
-              child: Container(
-                padding: EdgeInsets.all(5),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Text(this.item.name,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold
-                      ),
+    return Center(
+      //padding: EdgeInsets.all(2),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/' + this.item.image,
+            width: 300
+          ),
+           Container(
+              padding: EdgeInsets.all(5),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text(
+                    this.item.name,
+                    style: TextStyle(
+                      fontFamily: 'Impact',
+                      fontSize: 43,
+                      color: const Color(0xff419fbf),
                     ),
-                    Text(this.item.description),
-                    Text('Price: ' + this.item.price.toString()),
-                    RatingBox(this.item.name),
-                  ],
-                ),
+                    textAlign: TextAlign.left,
+                  ),
+                  Text(
+                    this.item.description,
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontSize: 33,
+                      color: const Color(0xff419fbf),
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  Text(
+                    this.item.price.toString() + '\$',
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontSize: 33,
+                      color: const Color(0xff6cafca),
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  RatingBox(this.item.name),
+                  SizedBox(height: 80),
+                ],
               ),
-            ),
-          ],
-        ),
+           ),
+        ],
       ),
     );
   }
