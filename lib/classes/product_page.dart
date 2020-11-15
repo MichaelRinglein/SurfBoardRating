@@ -16,68 +16,83 @@ class ProductPage extends StatelessWidget {
         title: Text(this.item.name),
         backgroundColor: const Color(0xff4ba3a4),
       ),
-      body: Center(
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: RadialGradient(
-              center: Alignment(0.01, -0.75),
-              radius: 0.719,
-              colors: [const Color(0x3de8f8fa), const Color(0x3d35b1db)],
-              stops: [0.0, 1.0],
-              transform: GradientXDTransform(
-                  0.002, 1.0, -0.649, 0.001, 0.39, -0.608, Alignment(0.01, -0.75)),
+      body: Stack(
+        children: <Widget> [
+
+          OverflowBox(
+            maxWidth: 400,
+            alignment: AlignmentDirectional.bottomEnd,
+            child: Image(
+              image: AssetImage(
+                  'wave-right.png'
+              ),
+              fit: BoxFit.contain,
             ),
           ),
-          padding: EdgeInsets.all(0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/' + this.item.image,
-                width: 300
+          Center(
+            child: Container(
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                center: Alignment(0.01, -0.75),
+                radius: 0.719,
+                colors: [const Color(0x3de8f8fa), const Color(0x3d35b1db)],
+                stops: [0.0, 1.0],
+                transform: GradientXDTransform(
+                    0.002, 1.0, -0.649, 0.001, 0.39, -0.608, Alignment(0.01, -0.75)),
               ),
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.all(5),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Text(
-                        this.item.name,
-                        style: TextStyle(
-                          fontFamily: 'Impact',
-                          fontSize: 43,
-                          color: const Color(0xff419fbf),
+            ),
+            padding: EdgeInsets.all(0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/' + this.item.image,
+                  width: 300
+                ),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.all(5),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          this.item.name,
+                          style: TextStyle(
+                            fontFamily: 'Impact',
+                            fontSize: 43,
+                            color: const Color(0xff419fbf),
+                          ),
+                          textAlign: TextAlign.left,
                         ),
-                        textAlign: TextAlign.left,
-                      ),
-                      Text(
-                        this.item.description,
-                        style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontSize: 33,
-                          color: const Color(0xff419fbf),
+                        Text(
+                          this.item.description,
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontSize: 33,
+                            color: const Color(0xff419fbf),
+                          ),
+                          textAlign: TextAlign.left,
                         ),
-                        textAlign: TextAlign.left,
-                      ),
-                      Text(
-                        this.item.price.toString() + '\$',
-                        style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontSize: 33,
-                          color: const Color(0xff6cafca),
+                        Text(
+                          this.item.price.toString() + '\$',
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontSize: 33,
+                            color: const Color(0xff6cafca),
+                          ),
+                          textAlign: TextAlign.left,
                         ),
-                        textAlign: TextAlign.left,
-                      ),
-                      RatingBox(this.item.name),
-                    ],
+                        RatingBox(this.item.name),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+          ),
+        ]
       ),
     );
   }

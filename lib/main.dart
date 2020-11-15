@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Rate Haydenshapes Boards',
+          'Rate Surfboards',
           style: TextStyle(
             fontFamily: 'Roboto',
             color: const Color(0xfff8f5f5),
@@ -193,23 +193,37 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       )
       ),
-      body: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            child: ProductBox(item: items[index]),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProductPage(
-                    item: this.items[index]
+      body: Stack(
+        children: [
+        OverflowBox(
+          maxWidth: 400,
+          alignment: AlignmentDirectional.bottomEnd,
+          child: Image(
+            image: AssetImage(
+              'wave-right.png'
+            ),
+            fit: BoxFit.contain,
+          ),
+        ),
+        ListView.builder(
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              child: ProductBox(item: items[index]),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProductPage(
+                      item: this.items[index]
 ,                  )
-                )
-              );
-            }
-          );
-        },
+                  )
+                );
+              }
+            );
+          },
+        ),
+    ]
       ),
     );
   }

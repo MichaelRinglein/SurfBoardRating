@@ -40,14 +40,20 @@ class _SignInState extends State<SignIn> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                'Rate your Surfboard',
-                style: TextStyle(
-                  fontFamily: 'Impact',
-                  fontSize: 18,
-                  color: const Color(0xff4ba3a4),
+              Container(
+                padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                child: FittedBox(
+                  fit:BoxFit.fitWidth,
+                  child: Text(
+                    'Rate your Surfboard',
+                    style: TextStyle(
+                      fontFamily: 'Impact',
+                      fontSize: 58,
+                      color: const Color(0xff4ba3a4),
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
                 ),
-                textAlign: TextAlign.left,
               ),
               SizedBox( height: 130 ),
               RaisedButton(
