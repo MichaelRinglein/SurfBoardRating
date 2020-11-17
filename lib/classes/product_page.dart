@@ -15,6 +15,18 @@ class ProductPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(this.item.name),
         backgroundColor: const Color(0xff4ba3a4),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: RadialGradient(
+              center: Alignment(-0.5, 0.0),
+              radius: 10,
+              colors: [const Color(0xffa8dfe5), const Color(0xff4ba3a4)],
+              stops: [0.0, 1.0],
+              transform: GradientXDTransform(
+                  1.0, 0.0, 0.0, 4.98, 0.0, -1.99, Alignment(-0.98, 0.0)),
+            ),
+          ),
+        ),
       ),
       body: Stack(
         children: <Widget> [
