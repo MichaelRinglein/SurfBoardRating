@@ -20,35 +20,40 @@ class _RatingBoxState extends State<RatingBox> {
   FirestoreHandle _firestore = FirestoreHandle();
 
   void _setRatingOneStar(String user, String surfboard) async {
-    await _firestore.addRating(user, 1, surfboard);
+    await _firestore.addRatingOfUser(user, 1, surfboard);
+    //await _firestore.addRatingToSurfboard(user, 1, surfboard);
     setState(() {
       _rating = 1;
     });
   }
 
   void _setRatingTwoStar(String user, String surfboard) async {
-    await _firestore.addRating(user, 2, surfboard);
+    await _firestore.addRatingOfUser(user, 2, surfboard);
+    //await _firestore.addRatingToSurfboard(user, 2, surfboard);
     setState(() {
       _rating = 2;
     });
   }
 
   void _setRatingThreeStar(String user, String surfboard) async {
-    await _firestore.addRating(user, 3, surfboard);
+    await _firestore.addRatingOfUser(user, 3, surfboard);
+    //await _firestore.addRatingToSurfboard(user, 3, surfboard);
     setState(() {
       _rating = 3;
     });
   }
 
   void _setRatingFourStar(String user, String surfboard) async {
-    await _firestore.addRating(user, 4, surfboard);
+    await _firestore.addRatingOfUser(user, 4, surfboard);
+    //await _firestore.addRatingToSurfboard(user, 4, surfboard);
     setState(() {
       _rating = 4;
     });
   }
 
   void _setRatingFiveStar(String user, String surfboard) async {
-    await _firestore.addRating(user, 5, surfboard);
+    await _firestore.addRatingOfUser(user, 5, surfboard);
+    //await _firestore.getRatingOfSurfboard(surfboard);
     setState(() {
       _rating = 5;
     });
@@ -88,7 +93,11 @@ class _RatingBoxState extends State<RatingBox> {
     double _size = 40;
     if (user != null) {
       return FutureBuilder<DocumentSnapshot>(
-          future: _ratings.doc(widget.surfboard).get(),
+          future: _ratings
+              .doc('surfboards')
+              .collection(widget.surfboard)
+              .doc(user.uid)
+              .get(),
           builder:
               (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
             if (snapshot.hasError) {
@@ -97,9 +106,9 @@ class _RatingBoxState extends State<RatingBox> {
             if (snapshot.connectionState == ConnectionState.done) {
               Map<String, dynamic> data = snapshot.data.data();
               try {
-                data['surfboard'] != null
-                    ? _rating = data['rating']
-                    : _rating = 0;
+                data != null ? _rating = data['rating'] : _rating = 0;
+                //print('_rating now is $_rating');
+                //print('data is $data');
                 return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.end,
