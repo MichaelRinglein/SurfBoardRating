@@ -3,14 +3,12 @@ import 'package:surfboard_rating_pwa/main.dart';
 import 'package:surfboard_rating_pwa/services/auth.dart';
 import 'package:adobe_xd/adobe_xd.dart';
 
-
 class SignIn extends StatefulWidget {
   @override
   _SignInState createState() => _SignInState();
 }
 
 class _SignInState extends State<SignIn> {
-
   Auth _auth = Auth();
 
   @override
@@ -19,15 +17,13 @@ class _SignInState extends State<SignIn> {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color:  Color(0xFFE8F8FA),
+            color: Color(0xFFE8F8FA),
             blurRadius: 20,
             spreadRadius: 0,
           ),
         ],
         image: DecorationImage(
-          image: AssetImage(
-            'waves-login.png'
-          ),
+          image: AssetImage('waves-login.png'),
           fit: BoxFit.contain,
           alignment: AlignmentDirectional.bottomCenter,
         ),
@@ -57,7 +53,7 @@ class _SignInState extends State<SignIn> {
               Container(
                 padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
                 child: FittedBox(
-                  fit:BoxFit.fitWidth,
+                  fit: BoxFit.fitWidth,
                   child: Text(
                     'Rate your Surfboard',
                     style: TextStyle(
@@ -69,13 +65,15 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
               ),
-              SizedBox( height: 130 ),
-              RaisedButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(80.0),
+              SizedBox(height: 130),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: const Color(0xe6f2ca9a),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(80.0),
+                  ),
+                  padding: EdgeInsets.all(20),
                 ),
-                color: const Color(0xe6f2ca9a),
-                padding: EdgeInsets.all(20),
                 child: Text(
                   'Login Anonymously',
                   style: TextStyle(
@@ -87,17 +85,21 @@ class _SignInState extends State<SignIn> {
                   await _auth.loginAnonym();
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MyHomePage(title: 'Successfully logged in')),
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            MyHomePage(title: 'Successfully logged in')),
                   );
                 },
               ),
-              SizedBox( height: 20 ),
-              RaisedButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(80.0),
+              SizedBox(height: 20),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: const Color(0xe6f2ca9a),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(80.0),
+                  ),
+                  padding: EdgeInsets.all(20),
                 ),
-                color: const Color(0xe6f2ca9a),
-                padding: EdgeInsets.all(20),
                 child: Text(
                   'Login with Google',
                   style: TextStyle(
@@ -109,7 +111,9 @@ class _SignInState extends State<SignIn> {
                   await _auth.loginWithGoogle();
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MyHomePage(title: 'Successfully logged in')),
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            MyHomePage(title: 'Successfully logged in')),
                   );
                 },
               ),

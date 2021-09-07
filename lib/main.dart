@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:surfboard_rating_pwa/classes/loading.dart';
 import 'package:surfboard_rating_pwa/classes/sign_in.dart';
 import 'package:surfboard_rating_pwa/services/auth.dart';
-import 'package:surfboard_rating_pwa/services/firestore.dart';
 import 'classes/product.dart';
 import 'classes/product_page.dart';
 import 'classes/product_box.dart';
@@ -25,30 +23,29 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _initialization,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Container();
-        }
-        if (snapshot.connectionState == ConnectionState.done) {
-          return StreamProvider<User>.value(
-            value: Auth().user,
-            child: MaterialApp(
-              title: 'Flutter Demo',
-              theme: ThemeData(
-                primarySwatch: Colors.blue,
-                visualDensity: VisualDensity.adaptivePlatformDensity,
+        future: _initialization,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Container();
+          }
+          if (snapshot.connectionState == ConnectionState.done) {
+            return StreamProvider<User>.value(
+              value: Auth().user,
+              child: MaterialApp(
+                title: 'Flutter Demo',
+                theme: ThemeData(
+                  primarySwatch: Colors.blue,
+                  visualDensity: VisualDensity.adaptivePlatformDensity,
+                ),
+                home: MyHomePage(title: 'Successfully logged in'),
               ),
-              home: MyHomePage(title: 'Successfully logged in'),
-            ),
-          );
-        }
-        if (snapshot.connectionState == ConnectionState.waiting) {
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Loading();
+          }
           return Loading();
-        }
-        return Loading();
-      }
-    );
+        });
   }
 }
 
@@ -96,112 +93,102 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       drawer: Drawer(
-        child:
-        user == null ?
-        ListView(
-          children: [
-            UserAccountsDrawerHeader(
-              accountName: Text(
-                'Not logged in',
-                style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                ),
-              ),
-              decoration: BoxDecoration(
-                color: const Color(0xffeec08a),
-              ),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.login,
-                color: Colors.white,
-              ),
-              title: Text(
-                'Login',
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.white,
-                ),
-              ),
-              tileColor: const Color(0xffeec08a),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SignIn()
-                  )
-                );
-              }
-            )
-          ],
-        )
-        :
-        ListView(
-        children: [
-          user.isAnonymous == true ?
-          UserAccountsDrawerHeader(
-            accountName: Text(
-              'Anonym',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            accountEmail: Text('nobody@anonym.com'),
-            decoration: BoxDecoration(
-              color: const Color(0xffeec08a),
-            ),
-          )
-          :
-          UserAccountsDrawerHeader(
-            currentAccountPicture: CircleAvatar(
-              backgroundImage: NetworkImage(user.photoURL),
-            ),
-            accountName: Text(user.displayName,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            accountEmail: Text(user.email),
-            decoration: BoxDecoration(
-              color: const Color(0xffeec08a),
-            ),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.logout,
-              color: Colors.white,
-            ),
-            title: Text(
-              'Logout',
-              style: TextStyle(
-              fontSize: 15,
-              color: Colors.white,
-              ),
-            ),
-            tileColor: const Color(0xffeec08a),
-            onTap: () async {
-              await _auth.logOut();
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SignIn()
-                  )
-              );
-            },
-          ),
-        ],
-      )
-      ),
-      body: Stack(
-        children: [
+          child: user == null
+              ? ListView(
+                  children: [
+                    UserAccountsDrawerHeader(
+                      accountEmail: Text('someone@example.com'),
+                      accountName: Text(
+                        'Not logged in',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xffeec08a),
+                      ),
+                    ),
+                    ListTile(
+                        leading: Icon(
+                          Icons.login,
+                          color: Colors.white,
+                        ),
+                        title: Text(
+                          'Login',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.white,
+                          ),
+                        ),
+                        tileColor: const Color(0xffeec08a),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignIn()));
+                        })
+                  ],
+                )
+              : ListView(
+                  children: [
+                    user.isAnonymous == true
+                        ? UserAccountsDrawerHeader(
+                            accountName: Text(
+                              'Anonym',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            accountEmail: Text('nobody@anonym.com'),
+                            decoration: BoxDecoration(
+                              color: const Color(0xffeec08a),
+                            ),
+                          )
+                        : UserAccountsDrawerHeader(
+                            currentAccountPicture: CircleAvatar(
+                              backgroundImage: NetworkImage(user.photoURL),
+                            ),
+                            accountName: Text(
+                              user.displayName,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            accountEmail: Text(user.email),
+                            decoration: BoxDecoration(
+                              color: const Color(0xffeec08a),
+                            ),
+                          ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.logout,
+                        color: Colors.white,
+                      ),
+                      title: Text(
+                        'Logout',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white,
+                        ),
+                      ),
+                      tileColor: const Color(0xffeec08a),
+                      onTap: () async {
+                        await _auth.logOut();
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => SignIn()));
+                      },
+                    ),
+                  ],
+                )),
+      body: Stack(children: [
         OverflowBox(
           maxWidth: 400,
           alignment: AlignmentDirectional.bottomEnd,
           child: Image(
-            image: AssetImage(
-              'wave-right.png'
-            ),
+            image: AssetImage('wave-right.png'),
             fit: BoxFit.contain,
           ),
         ),
@@ -209,22 +196,18 @@ class _MyHomePageState extends State<MyHomePage> {
           itemCount: items.length,
           itemBuilder: (context, index) {
             return GestureDetector(
-              child: ProductBox(item: items[index]),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProductPage(
-                      item: this.items[index]
-,                  )
-                  )
-                );
-              }
-            );
+                child: ProductBox(item: items[index]),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ProductPage(
+                                item: this.items[index],
+                              )));
+                });
           },
         ),
-    ]
-      ),
+      ]),
     );
   }
 }
