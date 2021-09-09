@@ -55,7 +55,7 @@ class _SignInState extends State<SignIn> {
                 child: FittedBox(
                   fit: BoxFit.fitWidth,
                   child: Text(
-                    'Rate your Surfboard',
+                    'Rate Surfboards',
                     style: TextStyle(
                       fontFamily: 'Impact',
                       fontSize: 188,

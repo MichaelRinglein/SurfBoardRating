@@ -7,7 +7,6 @@ class FirestoreHandle {
       FirebaseFirestore.instance.collection('ratings');
 
   Future<void> addRatingOfUser(String user, int rating, String surfboard) {
-    //getRatingOfSurfboard(surfboard);
     return _ratings
         .doc('surfboards')
         .collection(surfboard)
@@ -19,8 +18,6 @@ class FirestoreHandle {
   }
 
   Future<void> getRatingOfSurfboard(String surfboard) {
-    //int amountRatings;
-
     return _ratings
         .doc('surfboards')
         .collection(surfboard)
@@ -34,25 +31,5 @@ class FirestoreHandle {
       print('there are $amountReviews ratings for this board');
     }).catchError((e) => print('getRatingOfBoard failed: $e'));
   }
-
-/*
-      .then((DocumentSnapshot documentSnapshot) {
-      Map<String, dynamic> data = documentSnapshot.data();
-      print('data is $data');
-      int dataLength = data.length;
-      print('data.length = $dataLength');
-      print('Document exists on the database');
-
-      return _surfboards
-          .doc(surfboard)
-          .update({
-            'ratingsSum': rating,
-            'ratingsAmount': dataLength,
-          })
-          .then((value) => print(
-              'addRatingToSurfboard: $user rated $surfboard with $rating stars'))
-          .catchError((e) => print('addRatingOfUse failed: $e'));
-    });
-    */
 
 }

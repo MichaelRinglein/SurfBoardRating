@@ -14,22 +14,22 @@ class Product {
         Product(
             'Hypto Krypto',
             'Nice beginner board',
-            600,
+            350,
             'Haydenshapes-Hypto-Krypto.jpg'
         )
     );
     items.add(
         Product(
             'Plunder',
-            'What is this?',
-            600,
+            'A strange board',
+            500,
             'Haydenshapes-Plunder.jpg'
         )
     );
     items.add(
         Product(
             'White Noiz',
-            'Something advanced',
+            'A board for advanced surfers',
             600,
             'Haydenshapes-White-Noiz.jpg'
         )

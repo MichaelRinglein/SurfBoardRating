@@ -32,7 +32,7 @@ class _RatingDisplayState extends State<RatingDisplay> {
     final user = Provider.of<User>(context);
     //CollectionReference _ratings =
     //double _size = 40;
-    if (user != null) {
+   
       // todo: StreamBuilder instead of FutureBuilder https://firebase.flutter.dev/docs/firestore/usage/#realtime-changes
       return StreamBuilder<QuerySnapshot>(
           stream: _ratings,
@@ -73,15 +73,6 @@ class _RatingDisplayState extends State<RatingDisplay> {
               ],
             );
           });
-    } else {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Container(),
-        ],
-      );
-    }
+    
   }
 }
