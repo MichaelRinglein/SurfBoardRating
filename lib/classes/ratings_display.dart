@@ -44,63 +44,33 @@ class _RatingDisplayState extends State<RatingDisplay> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Text('Loading...');
             }
-            if (snapshot.connectionState == ConnectionState.done) {
-              _amountRatings = snapshot.data.docs.length;
-              snapshot.data.docs.forEach((doc) {
-                _rating += doc['rating'];
-                _averageRating = _rating / _amountRatings;
-              });
-
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisSize: MainAxisSize.max,
-                children: snapshot.data.docs.map((DocumentSnapshot document) {
-                  return Row(
-                    children: [
-                      Icon(
-                        Icons.star,
-                        size: 20,
-                        color: Colors.orange,
-                      ),
-                      Text(_averageRating.toStringAsFixed(2) +
-                          ' (' +
-                          _amountRatings.toString() +
-                          ')'),
-                    ],
-                  );
-                }).toList(),
-              );
-            }
             if (snapshot.connectionState == ConnectionState.none) {
               return Container();
             }
 
+            _rating = 0;
             _amountRatings = snapshot.data.docs.length;
             snapshot.data.docs.forEach((doc) {
               _rating += doc['rating'];
-              _averageRating = _rating / _amountRatings;
             });
+            _averageRating = _rating / _amountRatings;
+            //print('rating is $_rating and _averageRating is $_averageRating');
 
             return Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisSize: MainAxisSize.max,
-              children: snapshot.data.docs.map((DocumentSnapshot document) {
-                return Row(
-                  children: [
-                    Icon(
-                      Icons.star,
-                      size: 20,
-                      color: Colors.orange,
-                    ),
-                    Text(_averageRating.toStringAsFixed(2) +
-                        ' (' +
-                        _amountRatings.toString() +
-                        ')'),
-                  ],
-                );
-              }).toList(),
+              children: [
+                Icon(
+                  Icons.star,
+                  size: 20,
+                  color: Colors.orange,
+                ),
+                Text(_averageRating.toStringAsFixed(2) +
+                    ' (' +
+                    _amountRatings.toString() +
+                    ')'),
+              ],
             );
           });
     } else {

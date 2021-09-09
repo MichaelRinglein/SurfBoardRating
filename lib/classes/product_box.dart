@@ -38,18 +38,39 @@ class ProductBox extends StatelessWidget {
                                 ),
                                 textAlign: TextAlign.left,
                               ),
-                              RatingDisplay(this.item.name),
+                              Row(
+                                children: [
+                                  RatingDisplay(this.item.name),
+                                  SizedBox(width: 20.0),
+                                  Icon(
+                                    Icons.attach_money,
+                                    size: 20,
+                                    color: Colors.green,
+                                  ),
+                                  Text(
+                                    this.item.price.toString() + '\$',
+                                    style: TextStyle(
+                                      fontFamily: 'Roboto',
+                                      fontSize: 20,
+                                      color: const Color(0xff6cafca),
+                                    ),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 20.0),
                               Text(
                                 this.item.description,
                                 style: TextStyle(
                                   fontFamily: 'Roboto',
-                                  fontSize: 33,
+                                  fontSize: 24,
                                   color: const Color(0xff419fbf),
                                 ),
                                 textAlign: TextAlign.left,
                               ),
+                              SizedBox(height: 20.0),
                               Text(
-                                this.item.price.toString() + '\$',
+                                'Rate this board:',
                                 style: TextStyle(
                                   fontFamily: 'Roboto',
                                   fontSize: 33,
